@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "196437206937",
+    "project_id": "randomrecipes-a7908",
+    "storage_bucket": "randomrecipes-a7908.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196437206937:android:679d33bb5a7df95e979508",
+        "android_client_info": {
+          "package_name": "com.randomrecipes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196437206937-rdcq8m3jgpoa7ieoa5orm8nttfn8v0ra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB39brsiGk8Tt3EISRUvxz5SiI77_sLpbY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196437206937-rdcq8m3jgpoa7ieoa5orm8nttfn8v0ra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

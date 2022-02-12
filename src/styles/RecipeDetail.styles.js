@@ -2,6 +2,9 @@ import {StyleSheet} from 'react-native';
 import {theme} from '../utils/constants/theme';
 
 export const styles = StyleSheet.create({
+  container: {
+    padding: 15,
+  },
   image: {
     height: 200,
     width: 'auto',
@@ -17,11 +20,14 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  body: {
+    fontSize: 15,
+    marginVertical: 10,
+  },
   button: {
     padding: 10,
     backgroundColor: theme.primaryColor,
     borderRadius: 5,
-    marginTop: 10,
   },
   buttonText: {
     textAlign: 'center',

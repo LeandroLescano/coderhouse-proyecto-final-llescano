@@ -16,13 +16,23 @@ export const styles = StyleSheet.create({
 
     elevation: 2,
   },
+  itemPressed: {
+    marginVertical: 8,
+    marginHorizontal: 10,
+  },
   imageContainer: {
     width: '100%',
     height: 150,
     justifyContent: 'center',
+    backgroundColor: 'black',
+    borderRadius: 10,
   },
   image: {
     borderRadius: 10,
+  },
+  imagePressed: {
+    borderRadius: 10,
+    opacity: 0.6,
   },
   title: {
     color: theme.white,

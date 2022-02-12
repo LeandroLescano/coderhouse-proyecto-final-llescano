@@ -1,6 +1,7 @@
 import {
   API_RECIPES_BY_AREA,
   API_RECIPES_BY_CATEGORY,
+  API_RECIPES_BY_ID,
   API_RECIPES_BY_INGREDIENT,
 } from '../../utils/constants/api';
 import {AREAS, CATEGORIES, INGREDIENTS} from '../../utils/constants/constans';
@@ -8,10 +9,23 @@ import {AREAS, CATEGORIES, INGREDIENTS} from '../../utils/constants/constans';
 export const SELECT_RECIPE = 'SELECT_RECIPE';
 export const GET_RECIPES = 'GET_RECIPES';
 
-export const selectRecipe = recipe => ({
-  type: SELECT_RECIPE,
-  recipe,
-});
+export const selectRecipe = (recipe, id) => {
+  if (recipe) {
+    return {
+      type: SELECT_RECIPE,
+      recipe,
+    };
+  } else {
+    return async dispatch => {
+      const response = await fetch(API_RECIPES_BY_ID + id);
+      const data = await response.json();
+      dispatch({
+        type: SELECT_RECIPE,
+        recipe: data.meals[0],
+      });
+    };
+  }
+};
 
 export const getRecipes = (type, filter) => {
   return async dispatch => {

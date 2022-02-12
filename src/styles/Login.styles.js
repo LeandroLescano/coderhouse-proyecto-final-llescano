@@ -19,6 +19,12 @@ export const styles = StyleSheet.create({
     width: 'auto',
     marginBottom: 10,
   },
+  signUp: {
+    textAlign: 'right',
+  },
+  signUpLink: {
+    color: theme.primaryColor,
+  },
   input: {
     borderColor: theme.grey,
     borderWidth: 1,
