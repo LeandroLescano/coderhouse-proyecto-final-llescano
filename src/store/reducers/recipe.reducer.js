@@ -1,6 +1,7 @@
-import {SELECT_RECIPE} from '../actions/recipe.action';
+import {GET_RECIPES, SELECT_RECIPE} from '../actions/recipe.action';
 
 const initialState = {
+  recipes: [],
   selected: null,
 };
 
@@ -10,6 +11,11 @@ const RecipeReducer = (state = initialState, action) => {
       return {
         ...state,
         selected: action.recipe,
+      };
+    case GET_RECIPES:
+      return {
+        ...state,
+        recipes: action.payload,
       };
     default:
       return state;

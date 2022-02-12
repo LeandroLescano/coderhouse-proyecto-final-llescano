@@ -13,7 +13,7 @@ const HomeButton = ({handlePress, styleButton, title}) => {
       }}
       style={({pressed}) => [
         styleButton,
-        {backgroundColor: pressed ? theme.primaryDark : theme.primaryColor},
+        {backgroundColor: pressed ? theme.primaryDark : theme.primaryVariant},
       ]}>
       <Text style={styles.buttonText}>{title}</Text>
     </Pressable>

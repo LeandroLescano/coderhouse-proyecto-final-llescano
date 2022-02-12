@@ -1,3 +1,4 @@
+import {AREAS, CATEGORIES, INGREDIENTS} from '../utils/constants/constans';
 import {Text, TouchableHighlight, View} from 'react-native';
 
 import {API_RECIPE_RANDOM} from '../utils/constants/api';
@@ -32,7 +33,7 @@ const Home = ({navigation}) => {
       <View style={styles.containerButtons}>
         <HomeButton
           handlePress={() =>
-            navigation.navigate('ListScreen', {type: 'categories'})
+            navigation.navigate('ListScreen', {type: CATEGORIES})
           }
           styleButton={styles.buttonRow}
           title="List all categories"
@@ -46,13 +47,13 @@ const Home = ({navigation}) => {
       <View style={styles.containerButtons}>
         <HomeButton
           handlePress={() =>
-            navigation.navigate('ListScreen', {type: 'ingredients'})
+            navigation.navigate('ListScreen', {type: INGREDIENTS})
           }
           styleButton={styles.buttonRow}
           title="List ingredients"
         />
         <HomeButton
-          handlePress={() => navigation.navigate('ListScreen', {type: 'areas'})}
+          handlePress={() => navigation.navigate('ListScreen', {type: AREAS})}
           styleButton={styles.buttonRow}
           title="List areas"
         />

@@ -1,5 +1,11 @@
 export const API_ALL_CATEGORIES =
-  'https://www.themealdb.com/api/json/v1/1/categories.php';
+  'https://www.themealdb.com/api/json/v1/1/list.php?c=list';
+
+export const API_ALL_INGREDIENTS =
+  'https://www.themealdb.com/api/json/v1/1/list.php?i=list';
+
+export const API_ALL_AREAS =
+  'https://www.themealdb.com/api/json/v1/1/list.php?a=list';
 
 export const API_RECIPES_BY_CATEGORY =
   'https://www.themealdb.com/api/json/v1/1/filter.php?c=';

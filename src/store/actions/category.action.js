@@ -19,7 +19,7 @@ export const getCategories = () => {
       });
 
       const result = await response.json();
-      const categories = result.categories;
+      const categories = result.meals;
       dispatch({
         type: GET_CATEGORIES,
         payload: categories,
