@@ -42,3 +42,18 @@ export const logIn = (email, password) => async dispatch => {
     console.log(error);
   }
 };
+
+export const logOut = () => async dispatch => {
+  try {
+    auth()
+      .signOut()
+      .then(() => {
+        dispatch(changeLoginStatus(false));
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};

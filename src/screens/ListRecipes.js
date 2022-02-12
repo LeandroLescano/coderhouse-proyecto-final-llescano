@@ -4,12 +4,18 @@ import {getRecipes, selectRecipe} from '../store/actions/recipe.action';
 import {useDispatch, useSelector} from 'react-redux';
 
 import RecipeItem from '../components/RecipeItem';
+import {selectScreen} from '../store/actions/screen.action';
+import {useFocusEffect} from '@react-navigation/native';
 
 const ListRecipes = ({route, handleFilter, navigation}) => {
   const type = route.params.type;
   const filter = route.params.filter;
   const dispatch = useDispatch();
   const recipes = useSelector(state => state.recipes.recipes);
+
+  useFocusEffect(() => {
+    dispatch(selectScreen('Recipes - ' + filter));
+  });
 
   useEffect(() => {
     handleFilter(filter);

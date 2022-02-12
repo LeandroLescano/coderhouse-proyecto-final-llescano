@@ -2,8 +2,10 @@ import {Image, Text, TextInput, TouchableHighlight, View} from 'react-native';
 
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import React from 'react';
+import {logIn} from '../store/actions/user.action';
 import {styles} from '../styles/Login.styles';
 import {theme} from '../utils/constants/theme';
+import {useDispatch} from 'react-redux';
 import {useState} from 'react';
 
 const Login = ({navigation}) => {
@@ -12,7 +14,11 @@ const Login = ({navigation}) => {
     password: '',
   });
 
-  const handleLogin = () => {};
+  const dispatch = useDispatch();
+
+  const handleLogin = () => {
+    dispatch(logIn(user.email, user.password));
+  };
 
   return (
     <View style={styles.container}>

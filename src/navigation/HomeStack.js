@@ -5,7 +5,6 @@ import React from 'react';
 import RecipeDetail from '../screens/RecipeDetail';
 import Search from '../screens/Search';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {theme} from '../utils/constants/theme';
 import {useState} from 'react';
 
 const Stack = createNativeStackNavigator();
@@ -22,12 +21,7 @@ const HomeStack = () => {
     <Stack.Navigator
       screenOptions={{
         animation: 'flip',
-        headerStyle: {
-          backgroundColor: theme.primaryColor,
-        },
-        headerTitleAlign: 'center',
-        headerTitleStyle: {color: theme.white},
-        headerTintColor: theme.white,
+        headerShown: false,
       }}>
       <Stack.Screen component={Home} name="Home" />
       <Stack.Screen

@@ -1,25 +1,27 @@
+import {DrawerItem, createDrawerNavigator} from '@react-navigation/drawer';
 import React, {useEffect, useState} from 'react';
-import {changeLoginStatus, setUser} from '../store/actions/user.action';
+import {Text, View} from 'react-native';
+import {changeLoginStatus, logOut, setUser} from '../store/actions/user.action';
 
-import Favourites from '../screens/Favourites';
-import HomeStack from './HomeStack';
+import BottomTabNavigator from './BottomTabNavigator';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Login from '../screens/Login';
 import {NavigationContainer} from '@react-navigation/native';
 import SignUp from '../screens/SignUp';
 import auth from '@react-native-firebase/auth';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {theme} from '../utils/constants/theme';
 import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
 
-const BottomTab = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
 const AppNavigation = () => {
-  const isLogged = useSelector(state => state.user.isLogged);
+  const {user, isLogged} = useSelector(state => state.user);
+  const currentScreen = useSelector(state => state.screen.current);
   const dispatch = useDispatch();
-  // TODO - Create function to sign out
+
   useEffect(() => {
     const subscribe = auth().onAuthStateChanged(user => {
       if (user) {
@@ -49,35 +51,47 @@ const AppNavigation = () => {
             </Stack.Screen>
           </Stack.Navigator>
         ) : (
-          <BottomTab.Navigator
-            tabBarPosition="bottom"
+          <Drawer.Navigator
             screenOptions={{
-              swipeEnabled: false,
-              tabBarStyle: {
+              headerTitle: currentScreen,
+              headerTintColor: theme.white,
+              headerTitleAlign: 'center',
+
+              headerStyle: {
                 backgroundColor: theme.primaryColor,
               },
-              tabBarLabelStyle: {
-                color: theme.white,
-              },
-              tabBarIndicatorStyle: {backgroundColor: theme.secondaryColor},
-            }}>
-            <BottomTab.Screen
-              name="HomeStack"
-              options={{
-                tabBarLabel: 'Home',
-                tabBarIcon: () => <Icon name="home" size={20} color="#FFF" />,
-              }}
-              component={HomeStack}
+            }}
+            drawerContent={props => (
+              <View
+                style={{
+                  justifyContent: 'space-between',
+                  height: '100%',
+                  paddingBottom: 10,
+                }}>
+                <View style={{padding: 10}}>
+                  <Text>{user.email}</Text>
+                </View>
+                <DrawerItem
+                  icon={() => (
+                    <Icon
+                      name="sign-out-alt"
+                      size={18}
+                      color={theme.darkGray}
+                    />
+                  )}
+                  onPress={() => dispatch(logOut())}
+                  label="Sign Out"
+                  labelStyle={{color: theme.darkGray, fontSize: 15}}
+                  style={{backgroundColor: theme.secondaryColor}}
+                />
+              </View>
+            )}>
+            <Drawer.Screen
+              name="BottomTab"
+              options={{title: 'Home'}}
+              component={BottomTabNavigator}
             />
-            <BottomTab.Screen
-              name="Favorite"
-              options={{
-                tabBarLabel: 'Favorite',
-                tabBarIcon: () => <Icon name="heart" size={20} color="#FFF" />,
-              }}
-              component={Favourites}
-            />
-          </BottomTab.Navigator>
+          </Drawer.Navigator>
         )}
       </NavigationContainer>
     </>

@@ -8,6 +8,8 @@ import ListItem from '../components/ListItem';
 import {getAreas} from '../store/actions/area.action';
 import {getCategories} from '../store/actions/category.action';
 import {getIngredients} from '../store/actions/ingredient.action ';
+import {selectScreen} from '../store/actions/screen.action';
+import {useFocusEffect} from '@react-navigation/native';
 
 const ListScreen = ({route, handleType, navigation}) => {
   const dispatch = useDispatch();
@@ -34,6 +36,14 @@ const ListScreen = ({route, handleType, navigation}) => {
         break;
     }
   }, []);
+
+  useFocusEffect(() => {
+    dispatch(selectScreen(toCapitalize(type)));
+  });
+
+  const toCapitalize = str => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   const handlePress = item => {
     navigation.navigate('ListRecipes', {
