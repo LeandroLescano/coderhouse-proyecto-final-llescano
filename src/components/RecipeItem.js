@@ -1,6 +1,6 @@
 import {ImageBackground, Pressable, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
 
-import React from 'react';
 import {styles} from '../styles/RecipeItem';
 import {useState} from 'react';
 

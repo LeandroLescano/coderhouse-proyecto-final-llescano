@@ -1,18 +1,39 @@
 import React, {useEffect} from 'react';
-import {Text, View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
+import {FlatList} from 'react-native-gesture-handler';
+import RecipeItem from '../components/RecipeItem';
+import {View} from 'react-native';
+import {getFavourites} from '../store/actions/favourites.action';
+import {selectRecipe} from '../store/actions/recipe.action';
 import {selectScreen} from '../store/actions/screen.action';
-import {useDispatch} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 
-const Favourites = () => {
+const Favourites = ({navigation}) => {
   const dispatch = useDispatch();
+  const favourites = useSelector(state => state.favourites.recipes);
   useFocusEffect(() => {
     dispatch(selectScreen('Favourites'));
   });
+
+  useEffect(() => {
+    dispatch(getFavourites());
+  }, []);
+
+  const handlePress = recipe => {
+    dispatch(selectRecipe(recipe));
+    navigation.navigate('RecipeDetail');
+  };
+
   return (
     <View>
-      <Text>Favourites</Text>
+      <FlatList
+        data={favourites}
+        keyExtractor={item => item.idMeal}
+        renderItem={({item}) => (
+          <RecipeItem item={item} onPress={() => handlePress(item)} />
+        )}
+      />
     </View>
   );
 };
