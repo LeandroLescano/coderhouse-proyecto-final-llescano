@@ -1,7 +1,12 @@
-import {GET_RECIPES, SELECT_RECIPE} from '../actions/recipe.action';
+import {
+  GET_RECIPES,
+  SEARCH_RECIPES,
+  SELECT_RECIPE,
+} from '../actions/recipe.action';
 
 const initialState = {
   recipes: [],
+  searchRecipes: [],
   selected: null,
 };
 
@@ -16,6 +21,11 @@ const RecipeReducer = (state = initialState, action) => {
       return {
         ...state,
         recipes: action.payload,
+      };
+    case SEARCH_RECIPES:
+      return {
+        ...state,
+        searchRecipes: action.payload,
       };
     default:
       return state;

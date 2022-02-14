@@ -6,6 +6,7 @@ import {logIn} from '../store/actions/user.action';
 import {styles} from '../styles/Login.styles';
 import {theme} from '../utils/constants/theme';
 import {useDispatch} from 'react-redux';
+import {useRef} from 'react';
 import {useState} from 'react';
 
 const Login = ({navigation}) => {
@@ -13,7 +14,8 @@ const Login = ({navigation}) => {
     email: '',
     password: '',
   });
-
+  const inputPassword = useRef();
+  const inputEmail = useRef();
   const dispatch = useDispatch();
 
   const handleLogin = () => {
@@ -31,6 +33,8 @@ const Login = ({navigation}) => {
           placeholder="Email"
           value={user.email}
           style={styles.input}
+          ref={inputEmail}
+          onSubmitEditing={() => inputPassword.current.focus()}
           onChangeText={txt => setUser({...user, email: txt})}
         />
         <TextInput
@@ -38,6 +42,8 @@ const Login = ({navigation}) => {
           value={user.password}
           onChangeText={txt => setUser({...user, password: txt})}
           style={styles.input}
+          ref={inputPassword}
+          onSubmitEditing={() => handleLogin()}
           secureTextEntry={true}
         />
         <Text

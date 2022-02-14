@@ -2,7 +2,7 @@ import {Text, TouchableHighlight} from 'react-native';
 
 import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import React from 'react';
-import {styles} from '../styles/ListItem';
+import {styles} from '../styles/ListItem.styles';
 import {theme} from '../utils/constants/theme';
 
 const ListItem = ({title, onPress}) => {

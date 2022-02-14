@@ -1,7 +1,7 @@
 import {ImageBackground, Pressable, Text, View} from 'react-native';
 import React, {useEffect} from 'react';
 
-import {styles} from '../styles/RecipeItem';
+import {styles} from '../styles/RecipeItem.styles';
 import {useState} from 'react';
 
 const RecipeItem = ({item, onPress}) => {

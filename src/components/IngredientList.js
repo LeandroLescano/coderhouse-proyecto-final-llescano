@@ -1,31 +1,45 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
 import React from 'react';
+import {theme} from '../utils/constants/theme';
 import {useEffect} from 'react';
 import {useState} from 'react';
 
 const IngredientList = ({recipe}) => {
   const [ingredients, setIngredients] = useState([]);
   useEffect(() => {
+    let array = [];
     Object.keys(recipe).forEach(key => {
       if (key.includes('strIngredient') && recipe[key] !== '') {
         const index = key.replace('strIngredient', '');
-        setIngredients(prevIngredients => [
-          ...prevIngredients,
-          {
-            ingredient: recipe[key],
-            measure: recipe['strMeasure' + index],
-          },
-        ]);
+        array.push({
+          ingredient: recipe[key],
+          measure: recipe['strMeasure' + index],
+        });
       }
     });
+    setIngredients(array);
   }, [recipe]);
   return (
-    <View>
+    <View style={styles.container}>
       {ingredients.map((ingredient, index) => (
         <View key={index} style={styles.row}>
-          <Text style={styles.measure}>{ingredient.measure}</Text>
-          <Text style={styles.ingredient}> {ingredient.ingredient}</Text>
+          <View style={styles.item}>
+            <Image
+              style={styles.image}
+              source={{
+                uri: `https://www.themealdb.com/images/ingredients/${ingredient.ingredient}.png`,
+              }}
+            />
+            <Text style={{textAlign: 'center'}}>
+              <Text style={styles.measure}>{ingredient.measure}</Text>
+
+              <Text style={styles.ingredient}>
+                {' - '}
+                {ingredient.ingredient}
+              </Text>
+            </Text>
+          </View>
         </View>
       ))}
     </View>
@@ -35,17 +49,43 @@ const IngredientList = ({recipe}) => {
 export default IngredientList;
 
 const styles = StyleSheet.create({
-  row: {
+  container: {
+    flex: 1,
+    flexWrap: 'wrap',
     flexDirection: 'row',
-    width: '75%',
+  },
+  row: {
+    borderColor: theme.grey,
+    flexBasis: '33.33%',
+  },
+  item: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: theme.secondaryColor,
+    margin: 5,
+    borderColor: theme.grey,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    flex: 1,
+    elevation: 5,
   },
   measure: {
     fontWeight: 'bold',
     flex: 0.3,
-    textAlign: 'right',
   },
   ingredient: {
-    textAlign: 'left',
     flex: 1,
+    fontSize: 18,
+  },
+  image: {
+    width: 60,
+    height: 60,
+    resizeMode: 'contain',
   },
 });

@@ -3,11 +3,13 @@ import {
   API_RECIPES_BY_CATEGORY,
   API_RECIPES_BY_ID,
   API_RECIPES_BY_INGREDIENT,
+  API_RECIPES_BY_SEARCH,
 } from '../../utils/constants/api';
 import {AREAS, CATEGORIES, INGREDIENTS} from '../../utils/constants/constans';
 
 export const SELECT_RECIPE = 'SELECT_RECIPE';
 export const GET_RECIPES = 'GET_RECIPES';
+export const SEARCH_RECIPES = 'SEARCH_RECIPES';
 
 export const selectRecipe = (recipe, id) => {
   if (recipe) {
@@ -60,5 +62,28 @@ export const getRecipes = (type, filter) => {
     } catch (error) {
       console.warn(error.message);
     }
+  };
+};
+
+export const searchRecipes = searchText => {
+  return async dispatch => {
+    try {
+      const response = await fetch(API_RECIPES_BY_SEARCH + searchText);
+      const data = await response.json();
+      console.log(data);
+      dispatch({
+        type: SEARCH_RECIPES,
+        payload: data.meals,
+      });
+    } catch (error) {
+      console.warn(error.message);
+    }
+  };
+};
+
+export const cleanRecipes = () => {
+  return {
+    type: GET_RECIPES,
+    payload: [],
   };
 };
