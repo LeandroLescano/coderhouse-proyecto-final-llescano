@@ -9,7 +9,7 @@ const HomeButton = ({handlePress, styleButton, title}) => {
   const isConnected = useNetInfo().isConnected;
 
   useEffect(() => {
-    if (!isConnected) {
+    if (isConnected === false) {
       ToastAndroid.show(
         'No internet connection. Only offline recipes in favorites section available',
         ToastAndroid.LONG,
@@ -32,7 +32,7 @@ const HomeButton = ({handlePress, styleButton, title}) => {
               ? theme.disabledGrey
               : pressed
               ? theme.primaryDark
-              : theme.primaryVariant,
+              : theme.secondaryColor,
         },
       ]}>
       <Text style={styles.buttonText}>{title}</Text>

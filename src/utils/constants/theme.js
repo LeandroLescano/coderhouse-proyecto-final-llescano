@@ -1,16 +1,11 @@
 export const theme = {
-  primaryColor: '#e15634',
-  secondaryColor: '#f4d35e',
-  primaryVariant: '#ff7733',
+  primaryColor: '#184D47',
+  secondaryColor: '#C64756',
+  primaryVariant: '#96BB7C',
   primaryDark: '#c1392b',
-  white: '#faf0ca',
+  white: '#FFDDCC',
   black: '#1A1A1A',
   darkGray: '#212121',
   grey: '#757575',
+  disabledGrey: '#bdbdbd',
 };
-
-//e15634
-//ff7733
-//f85a3e
-//f4d35e
-//faf0ca

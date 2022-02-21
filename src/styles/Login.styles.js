@@ -13,17 +13,20 @@ export const styles = StyleSheet.create({
     flex: 2,
     justifyContent: 'center',
   },
+  imageContainer: {
+    flex: 0.5,
+    justifyContent: 'center',
+  },
   logo: {
     resizeMode: 'contain',
-    height: 70,
+    height: 100,
     width: 'auto',
-    marginBottom: 10,
   },
   signUp: {
     textAlign: 'right',
   },
   signUpLink: {
-    color: theme.primaryColor,
+    color: theme.secondaryColor,
   },
   input: {
     borderColor: theme.grey,
@@ -41,6 +44,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: theme.secondaryColor,
     borderRadius: 5,
+    marginTop: 20,
   },
   buttonDisabled: {
     padding: 10,
@@ -48,7 +52,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
-    color: 'white',
+    color: theme.white,
     fontSize: 20,
     paddingVertical: 5,
     fontWeight: 'bold',

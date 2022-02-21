@@ -1,33 +1,38 @@
 import {Image, Text, TextInput, TouchableHighlight, View} from 'react-native';
 
-import Icon from 'react-native-vector-icons/dist/FontAwesome5';
 import React from 'react';
-import {logIn} from '../store/actions/user.action';
+import {logIn, signIn} from '../store/actions/user.action';
 import {styles} from '../styles/Login.styles';
-import {theme} from '../utils/constants/theme';
 import {useDispatch} from 'react-redux';
 import {useRef} from 'react';
 import {useState} from 'react';
 
-const Login = ({navigation}) => {
+const Login = () => {
   const [user, setUser] = useState({
     email: '',
     password: '',
+    repeatPassword: '',
   });
+  const [isSignUp, setSignUp] = useState(false);
   const inputPassword = useRef();
   const inputEmail = useRef();
   const dispatch = useDispatch();
 
   const handleLogin = () => {
-    dispatch(logIn(user.email, user.password));
+    if (isSignUp) {
+      dispatch(signIn(user.email, user.password));
+    } else {
+      dispatch(logIn(user.email, user.password));
+    }
   };
+
+  const logo = require('../assets/images/logo-long.png');
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={{uri: 'https://picsum.photos/600/70'}}
-      />
+      <View style={styles.imageContainer}>
+        <Image style={styles.logo} source={logo} />
+      </View>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -46,15 +51,34 @@ const Login = ({navigation}) => {
           onSubmitEditing={() => handleLogin()}
           secureTextEntry={true}
         />
-        <Text
-          style={styles.signUp}
-          onPress={() => navigation.navigate('signUp')}>
-          Don't have an account? <Text style={styles.signUpLink}>Sign up</Text>
+        {isSignUp ? (
+          <TextInput
+            placeholder="Repeat password"
+            value={user.repeatPassword}
+            onChangeText={txt => setUser({...user, repeatPassword: txt})}
+            style={styles.input}
+            secureTextEntry={true}
+          />
+        ) : null}
+        <Text style={styles.signUp} onPress={() => setSignUp(!isSignUp)}>
+          {isSignUp ? (
+            <>
+              Have an account already?{' '}
+              <Text style={styles.signUpLink}>Log in</Text>
+            </>
+          ) : (
+            <>
+              Don't have an account?{' '}
+              <Text style={styles.signUpLink}>Sign up</Text>
+            </>
+          )}
         </Text>
+        <TouchableHighlight onPress={() => handleLogin()} style={styles.button}>
+          <Text style={styles.buttonText}>
+            {isSignUp ? 'Create account' : 'Log In'}
+          </Text>
+        </TouchableHighlight>
       </View>
-      <TouchableHighlight onPress={() => handleLogin()} style={styles.button}>
-        <Text style={styles.buttonText}>Log In</Text>
-      </TouchableHighlight>
     </View>
   );
 };

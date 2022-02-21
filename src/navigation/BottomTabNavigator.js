@@ -20,13 +20,13 @@ const BottomTabNavigator = () => {
         tabBarLabelStyle: {
           color: theme.white,
         },
-        tabBarIndicatorStyle: {backgroundColor: theme.secondaryColor},
+        tabBarIndicatorStyle: {backgroundColor: theme.white},
       }}>
       <BottomTab.Screen
         name="HomeStack"
         options={{
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? '#FFF' : theme.primaryVariant}}>
+            <Text style={{color: focused ? theme.white : theme.primaryVariant}}>
               HOME
             </Text>
           ),
@@ -34,7 +34,7 @@ const BottomTabNavigator = () => {
             <Icon
               name="home"
               size={20}
-              color={focused ? '#FFF' : theme.primaryVariant}
+              color={focused ? theme.white : theme.primaryVariant}
             />
           ),
         }}
@@ -44,7 +44,7 @@ const BottomTabNavigator = () => {
         name="Favorite"
         options={{
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? '#FFF' : theme.primaryVariant}}>
+            <Text style={{color: focused ? theme.white : theme.primaryVariant}}>
               FAVORITES
             </Text>
           ),
@@ -52,7 +52,7 @@ const BottomTabNavigator = () => {
             <Icon
               name="heart"
               size={20}
-              color={focused ? '#FFF' : theme.primaryVariant}
+              color={focused ? theme.white : theme.primaryVariant}
             />
           ),
         }}

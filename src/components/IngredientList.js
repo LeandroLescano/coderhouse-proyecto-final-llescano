@@ -31,7 +31,7 @@ const IngredientList = ({recipe}) => {
                 uri: `https://www.themealdb.com/images/ingredients/${ingredient.ingredient}.png`,
               }}
             />
-            <Text style={{textAlign: 'center'}}>
+            <Text style={{textAlign: 'center', color: theme.white}}>
               <Text style={styles.measure}>{ingredient.measure}</Text>
 
               <Text style={styles.ingredient}>
