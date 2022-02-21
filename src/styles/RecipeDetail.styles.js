@@ -12,11 +12,12 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 25,
-    marginVertical: 10,
+    marginTop: 10,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   subtitle: {
+    marginTop: 10,
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -25,9 +26,11 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {
-    padding: 10,
+    paddingVertical: 10,
     backgroundColor: theme.primaryColor,
     borderRadius: 5,
+    flex: 1,
+    justifyContent: 'center',
   },
   buttonText: {
     textAlign: 'center',
@@ -35,5 +38,9 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     textTransform: 'uppercase',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

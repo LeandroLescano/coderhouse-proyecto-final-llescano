@@ -45,11 +45,6 @@ const SignUp = () => {
           style={styles.input}
           secureTextEntry={true}
         />
-        <Text
-          style={styles.signUp}
-          onPress={() => navigation.navigate('signUp')}>
-          Don't have an account? <Text style={styles.signUpLink}>Sign up</Text>
-        </Text>
       </View>
       <TouchableHighlight onPress={() => handleSignUp()} style={styles.button}>
         <Text style={styles.buttonText}>Create account</Text>

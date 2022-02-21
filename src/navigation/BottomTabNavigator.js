@@ -2,6 +2,7 @@ import Favourites from '../screens/Favourites';
 import HomeStack from './HomeStack';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import React from 'react';
+import {Text} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {theme} from '../utils/constants/theme';
 
@@ -24,16 +25,36 @@ const BottomTabNavigator = () => {
       <BottomTab.Screen
         name="HomeStack"
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: () => <Icon name="home" size={20} color="#FFF" />,
+          tabBarLabel: ({focused}) => (
+            <Text style={{color: focused ? '#FFF' : theme.primaryVariant}}>
+              HOME
+            </Text>
+          ),
+          tabBarIcon: ({focused}) => (
+            <Icon
+              name="home"
+              size={20}
+              color={focused ? '#FFF' : theme.primaryVariant}
+            />
+          ),
         }}
         component={HomeStack}
       />
       <BottomTab.Screen
         name="Favorite"
         options={{
-          tabBarLabel: 'Favorite',
-          tabBarIcon: () => <Icon name="heart" size={20} color="#FFF" />,
+          tabBarLabel: ({focused}) => (
+            <Text style={{color: focused ? '#FFF' : theme.primaryVariant}}>
+              FAVORITES
+            </Text>
+          ),
+          tabBarIcon: ({focused}) => (
+            <Icon
+              name="heart"
+              size={20}
+              color={focused ? '#FFF' : theme.primaryVariant}
+            />
+          ),
         }}
         component={Favourites}
       />

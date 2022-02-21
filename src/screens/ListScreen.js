@@ -64,7 +64,7 @@ const ListScreen = ({route, handleType, navigation}) => {
         )}
         ListEmptyComponent={EmptyList}
         data={data}
-        keyExtractor={item => item[titleProperty]}
+        keyExtractor={(item, index) => index.toString()}
       />
     </View>
   );

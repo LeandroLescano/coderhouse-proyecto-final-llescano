@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
   item: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
+    borderRadius: 5,
+    paddingVertical: 5,
     backgroundColor: theme.secondaryColor,
     margin: 5,
     borderColor: theme.grey,
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   },
   ingredient: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 15,
   },
   image: {
     width: 60,

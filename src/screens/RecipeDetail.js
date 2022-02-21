@@ -1,4 +1,4 @@
-import {Image, ScrollView, Text, TouchableHighlight} from 'react-native';
+import {Image, ScrollView, Text, TouchableHighlight, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {addFavourite, removeFavourite} from '../functions/firebaseFavourites';
 
@@ -8,36 +8,88 @@ import {styles} from '../styles/RecipeDetail.styles';
 import {useDispatch} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import {
+  addFavouriteOffline,
+  removeFavouriteOffline,
+} from '../functions/offlineFavourites';
+import {useNetInfo} from '@react-native-community/netinfo';
+import {getFavouritesOffline} from '../store/actions/favourites.action';
 
 const RecipeDetail = () => {
-  const [favourite, setFavourite] = useState({isFavourite: false, id: null});
+  const [favourite, setFavourite] = useState({
+    isFavourite: false,
+    id: null,
+    isOffline: false,
+  });
+  const isConnected = useNetInfo().isConnected;
   const recipe = useSelector(state => state.recipes.selected);
   const favourites = useSelector(state => state.favourites.recipes);
+  const favouritesOffline = useSelector(
+    state => state.favourites.recipesOffline,
+  );
   const dispatch = useDispatch();
 
   useFocusEffect(() => {
     dispatch(selectScreen('Recipe detail'));
   });
 
+  const handleOffline = () => {
+    if (!favourite.isOffline) {
+      addFavouriteOffline(recipe);
+      setFavourite({...favourite, isOffline: true});
+    } else {
+      removeFromOfflineStorage();
+    }
+  };
+
+  const removeFromOfflineStorage = () => {
+    removeFavouriteOffline(recipe.idFirebase).then(() => {
+      dispatch(getFavouritesOffline());
+      setFavourite(prevState => ({...prevState, isOffline: false}));
+    });
+  };
+
   useEffect(() => {
-    if (favourites.length > 0) {
+    if (favourites && favourites.length > 0) {
+      let isFavorite = false;
       for (let favourite in favourites) {
         if (favourites[favourite].idMeal === recipe.idMeal) {
-          setFavourite({
+          isFavorite = true;
+          setFavourite(prevState => ({
+            ...prevState,
             isFavourite: true,
             id: favourites[favourite].idFirebase,
-          });
+          }));
           return;
-        } else {
-          setFavourite({isFavourite: false, id: null});
         }
+      }
+      if (!isFavorite) {
+        setFavourite(prevState => ({
+          ...prevState,
+          isFavourite: false,
+          id: null,
+        }));
       }
     }
   }, [favourites, recipe]);
 
+  useEffect(() => {
+    for (let fav in favouritesOffline) {
+      if (favouritesOffline[fav].idMeal === recipe.idMeal) {
+        setFavourite(prevState => ({
+          ...prevState,
+          isOffline: true,
+          isFavourite: true,
+        }));
+        return;
+      }
+    }
+  }, [favouritesOffline]);
+
   const handleFavourite = () => {
     if (favourite.isFavourite) {
       removeFavourite(favourite.id);
+      removeFromOfflineStorage();
     } else {
       addFavourite(recipe);
     }
@@ -53,15 +105,30 @@ const RecipeDetail = () => {
           <IngredientList recipe={recipe} />
           <Text style={styles.subtitle}>Instructions:</Text>
           <Text style={styles.body}>{recipe.strInstructions}</Text>
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => handleFavourite()}>
-            <Text style={styles.buttonText}>
-              {favourite.isFavourite
-                ? 'Remove from favourites'
-                : 'Add to favourites'}
-            </Text>
-          </TouchableHighlight>
+          <View style={styles.buttonsContainer}>
+            {isConnected ? (
+              <TouchableHighlight
+                style={styles.button}
+                onPress={() => handleFavourite()}>
+                <Text style={styles.buttonText}>
+                  {favourite.isFavourite
+                    ? 'Remove from\n favourites'
+                    : 'Add to\n favourites'}
+                </Text>
+              </TouchableHighlight>
+            ) : null}
+            {favourite.isFavourite ? (
+              <TouchableHighlight
+                style={[styles.button, {marginLeft: isConnected ? 10 : 0}]}
+                onPress={() => handleOffline()}>
+                <Text style={styles.buttonText}>
+                  {favourite.isOffline
+                    ? 'Remove from\n offline storage'
+                    : 'Save to\n offline storage'}
+                </Text>
+              </TouchableHighlight>
+            ) : null}
+          </View>
         </>
       ) : null}
     </ScrollView>

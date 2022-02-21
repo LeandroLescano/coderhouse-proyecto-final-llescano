@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: 150,
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: theme.secondaryColor,
     borderRadius: 10,
   },
   image: {

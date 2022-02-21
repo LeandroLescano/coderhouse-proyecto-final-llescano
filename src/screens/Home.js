@@ -1,9 +1,9 @@
 import {AREAS, CATEGORIES, INGREDIENTS} from '../utils/constants/constans';
-import React, {useEffect} from 'react';
-import {Text, TouchableHighlight, View} from 'react-native';
 
 import {API_RECIPE_RANDOM} from '../utils/constants/api';
 import HomeButton from '../components/HomeButton';
+import React from 'react';
+import {View} from 'react-native';
 import {selectRecipe} from '../store/actions/recipe.action';
 import {selectScreen} from '../store/actions/screen.action';
 import {styles} from '../styles/Home.styles';
