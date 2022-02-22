@@ -2,6 +2,8 @@ import auth from '@react-native-firebase/auth';
 
 export const SET_USER = 'SET_USER';
 export const CHANGE_LOGIN_STATUS = 'CHANGE_LOGIN_STATUS';
+export const SET_ERROR = 'SET_ERROR';
+export const SET_LOADING = 'SET_LOADING';
 
 export const changeLoginStatus = val => ({
   type: CHANGE_LOGIN_STATUS,
@@ -13,6 +15,11 @@ export const setUser = user => ({
   payload: user,
 });
 
+export const setError = error => ({
+  type: SET_ERROR,
+  payload: error,
+});
+
 export const signIn = (email, password) => async dispatch => {
   try {
     auth()
@@ -21,12 +28,28 @@ export const signIn = (email, password) => async dispatch => {
         dispatch(changeLoginStatus(true));
       })
       .catch(error => {
-        console.log(error);
+        dispatch(
+          setError(
+            error.message.substring(
+              error.message.indexOf(']') + 2,
+              error.message.indexOf('.'),
+            ),
+          ),
+        );
+        console.log({error});
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
       });
   } catch (error) {
     console.log(error);
   }
 };
+
+export const setLoading = val => ({
+  type: SET_LOADING,
+  payload: val,
+});
 
 export const logIn = (email, password) => async dispatch => {
   try {
@@ -36,7 +59,18 @@ export const logIn = (email, password) => async dispatch => {
         dispatch(changeLoginStatus(true));
       })
       .catch(error => {
-        console.log(error);
+        dispatch(
+          setError(
+            error.message.substring(
+              error.message.indexOf(']') + 2,
+              error.message.indexOf('.'),
+            ),
+          ),
+        );
+        console.log({error});
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
       });
   } catch (error) {
     console.log(error);

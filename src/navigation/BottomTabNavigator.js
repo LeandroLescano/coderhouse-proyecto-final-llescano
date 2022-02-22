@@ -26,7 +26,11 @@ const BottomTabNavigator = () => {
         name="HomeStack"
         options={{
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? theme.white : theme.primaryVariant}}>
+            <Text
+              style={{
+                color: focused ? theme.white : theme.primaryVariant,
+                fontSize: 12,
+              }}>
               HOME
             </Text>
           ),
@@ -44,7 +48,11 @@ const BottomTabNavigator = () => {
         name="Favorite"
         options={{
           tabBarLabel: ({focused}) => (
-            <Text style={{color: focused ? theme.white : theme.primaryVariant}}>
+            <Text
+              style={{
+                color: focused ? theme.white : theme.primaryVariant,
+                fontSize: 12,
+              }}>
               FAVORITES
             </Text>
           ),

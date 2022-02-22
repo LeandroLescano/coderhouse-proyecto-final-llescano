@@ -1,5 +1,5 @@
-import {Pressable, Text, ToastAndroid} from 'react-native';
-import React, {useEffect} from 'react';
+import {Pressable, Text} from 'react-native';
+import React from 'react';
 
 import {styles} from '../styles/Home.styles';
 import {theme} from '../utils/constants/theme';
@@ -7,15 +7,6 @@ import {useNetInfo} from '@react-native-community/netinfo';
 
 const HomeButton = ({handlePress, styleButton, title}) => {
   const isConnected = useNetInfo().isConnected;
-
-  useEffect(() => {
-    if (isConnected === false) {
-      ToastAndroid.show(
-        'No internet connection. Only offline recipes in favorites section available',
-        ToastAndroid.LONG,
-      );
-    }
-  }, [isConnected]);
 
   return (
     <Pressable

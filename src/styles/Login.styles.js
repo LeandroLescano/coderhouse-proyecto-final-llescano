@@ -17,6 +17,16 @@ export const styles = StyleSheet.create({
     flex: 0.5,
     justifyContent: 'center',
   },
+  errorContainer: {
+    position: 'absolute',
+    top: 20,
+    width: '100%',
+    borderRadius: 10,
+    padding: 10,
+  },
+  errorText: {
+    color: '#851919',
+  },
   logo: {
     resizeMode: 'contain',
     height: 100,
@@ -45,6 +55,7 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.secondaryColor,
     borderRadius: 5,
     marginTop: 20,
+    height: 60,
   },
   buttonDisabled: {
     padding: 10,

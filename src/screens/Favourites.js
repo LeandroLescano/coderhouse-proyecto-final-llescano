@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {FlatList} from 'react-native-gesture-handler';
 import RecipeItem from '../components/RecipeItem';
-import {View} from 'react-native';
+import {ToastAndroid, View} from 'react-native';
 import {
   getFavourites,
   getFavouritesOffline,
@@ -35,6 +35,13 @@ const Favourites = ({navigation}) => {
   useEffect(() => {
     if (isConnected && favourites && favourites.length === 0) {
       dispatch(getFavourites());
+    }
+    if (isConnected === false) {
+      console.log('offline');
+      ToastAndroid.show(
+        'No internet connection. Only offline recipes in favorites section available',
+        ToastAndroid.LONG,
+      );
     }
   }, [isConnected]);
 

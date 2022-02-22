@@ -8,11 +8,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import Login from '../screens/Login';
 import {NavigationContainer} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {theme} from '../utils/constants/theme';
 import {useDispatch, useSelector} from 'react-redux';
 
-const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const AppNavigation = () => {
@@ -47,7 +45,9 @@ const AppNavigation = () => {
               headerTitle: currentScreen,
               headerTintColor: theme.white,
               headerTitleAlign: 'center',
-
+              headerTitleStyle: {
+                fontSize: 16,
+              },
               headerStyle: {
                 backgroundColor: theme.primaryColor,
               },
@@ -60,7 +60,7 @@ const AppNavigation = () => {
                   paddingBottom: 10,
                 }}>
                 <View style={{padding: 10}}>
-                  <Text>{user.email}</Text>
+                  <Text>{`Email:\n${user.email}`}</Text>
                 </View>
                 <DrawerItem
                   icon={() => (
@@ -68,7 +68,7 @@ const AppNavigation = () => {
                   )}
                   onPress={() => dispatch(logOut())}
                   label="Sign Out"
-                  labelStyle={{color: theme.white, fontSize: 15}}
+                  labelStyle={{color: theme.white, fontSize: 14}}
                   style={{backgroundColor: theme.secondaryColor}}
                 />
               </View>

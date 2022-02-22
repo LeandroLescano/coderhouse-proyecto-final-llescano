@@ -1,9 +1,10 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 import React from 'react';
 import {theme} from '../utils/constants/theme';
 import {useEffect} from 'react';
 import {useState} from 'react';
+import IngredientItem from './IngredientItem';
 
 const IngredientList = ({recipe}) => {
   const [ingredients, setIngredients] = useState([]);
@@ -24,22 +25,7 @@ const IngredientList = ({recipe}) => {
     <View style={styles.container}>
       {ingredients.map((ingredient, index) => (
         <View key={index} style={styles.row}>
-          <View style={styles.item}>
-            <Image
-              style={styles.image}
-              source={{
-                uri: `https://www.themealdb.com/images/ingredients/${ingredient.ingredient}.png`,
-              }}
-            />
-            <Text style={{textAlign: 'center', color: theme.white}}>
-              <Text style={styles.measure}>{ingredient.measure}</Text>
-
-              <Text style={styles.ingredient}>
-                {' - '}
-                {ingredient.ingredient}
-              </Text>
-            </Text>
-          </View>
+          <IngredientItem styles={styles} ingredient={ingredient} />
         </View>
       ))}
     </View>
@@ -62,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
-    paddingVertical: 5,
+    padding: 5,
     backgroundColor: theme.secondaryColor,
     margin: 5,
     borderColor: theme.grey,

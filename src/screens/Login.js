@@ -1,11 +1,24 @@
-import {Image, Text, TextInput, TouchableHighlight, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 
 import React from 'react';
-import {logIn, signIn} from '../store/actions/user.action';
+import {
+  logIn,
+  setError,
+  setLoading,
+  signIn,
+} from '../store/actions/user.action';
 import {styles} from '../styles/Login.styles';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useRef} from 'react';
 import {useState} from 'react';
+import {theme} from '../utils/constants/theme';
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -17,12 +30,27 @@ const Login = () => {
   const inputPassword = useRef();
   const inputEmail = useRef();
   const dispatch = useDispatch();
+  const error = useSelector(state => state.user.error);
+  const loading = useSelector(state => state.user.isLoading);
 
   const handleLogin = () => {
-    if (isSignUp) {
-      dispatch(signIn(user.email, user.password));
+    if (user.email.length > 0 && user.password.length > 0) {
+      dispatch(setLoading(true));
+      if (isSignUp) {
+        dispatch(signIn(user.email.trim(), user.password.trim()));
+      } else {
+        dispatch(logIn(user.email.trim(), user.password.trim()));
+      }
     } else {
-      dispatch(logIn(user.email, user.password));
+      dispatch(setError('Please fill all fields'));
+      inputPassword.current.focus();
+    }
+  };
+
+  const handleChange = (attr, value) => {
+    setUser({...user, [attr]: value});
+    if (error) {
+      dispatch(setError(null));
     }
   };
 
@@ -39,13 +67,14 @@ const Login = () => {
           value={user.email}
           style={styles.input}
           ref={inputEmail}
+          on
           onSubmitEditing={() => inputPassword.current.focus()}
-          onChangeText={txt => setUser({...user, email: txt})}
+          onChangeText={txt => handleChange('email', txt)}
         />
         <TextInput
           placeholder="Password"
           value={user.password}
-          onChangeText={txt => setUser({...user, password: txt})}
+          onChangeText={txt => handleChange('password', txt)}
           style={styles.input}
           ref={inputPassword}
           onSubmitEditing={() => handleLogin()}
@@ -55,7 +84,7 @@ const Login = () => {
           <TextInput
             placeholder="Repeat password"
             value={user.repeatPassword}
-            onChangeText={txt => setUser({...user, repeatPassword: txt})}
+            onChangeText={txt => handleChange('repeatPassword', txt)}
             style={styles.input}
             secureTextEntry={true}
           />
@@ -75,9 +104,22 @@ const Login = () => {
         </Text>
         <TouchableHighlight onPress={() => handleLogin()} style={styles.button}>
           <Text style={styles.buttonText}>
-            {isSignUp ? 'Create account' : 'Log In'}
+            {loading ? (
+              <ActivityIndicator color={theme.white} />
+            ) : isSignUp ? (
+              'Create account'
+            ) : (
+              'Log in'
+            )}
           </Text>
         </TouchableHighlight>
+        <View
+          style={[
+            styles.errorContainer,
+            {backgroundColor: error ? '#FAA0A0' : 'transparent'},
+          ]}>
+          <Text style={styles.errorText}>{error || ''} </Text>
+        </View>
       </View>
     </View>
   );

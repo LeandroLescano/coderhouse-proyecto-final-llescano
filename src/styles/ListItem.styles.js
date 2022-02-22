@@ -3,7 +3,7 @@ import {theme} from '../utils/constants/theme';
 
 export const styles = StyleSheet.create({
   item: {
-    backgroundColor: theme.primaryVariant,
+    backgroundColor: theme.secondaryColor,
     padding: 10,
     marginVertical: 8,
     marginHorizontal: 10,

@@ -1,4 +1,4 @@
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {getRecipes, selectRecipe} from '../store/actions/recipe.action';
 import {useDispatch, useSelector} from 'react-redux';
@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import RecipeItem from '../components/RecipeItem';
 import {selectScreen} from '../store/actions/screen.action';
 import {useFocusEffect} from '@react-navigation/native';
+import EmptyList from '../components/EmptyList';
 
 const ListRecipes = ({route, handleFilter, navigation}) => {
   const type = route.params.type;
@@ -31,6 +32,7 @@ const ListRecipes = ({route, handleFilter, navigation}) => {
     <View>
       <FlatList
         data={recipes}
+        ListEmptyComponent={EmptyList}
         renderItem={({item}) => (
           <RecipeItem item={item} onPress={() => handlePress(item)} />
         )}

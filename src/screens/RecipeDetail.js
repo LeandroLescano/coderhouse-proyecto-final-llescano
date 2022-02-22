@@ -5,9 +5,7 @@ import {addFavourite, removeFavourite} from '../functions/firebaseFavourites';
 import IngredientList from '../components/IngredientList';
 import {selectScreen} from '../store/actions/screen.action';
 import {styles} from '../styles/RecipeDetail.styles';
-import {useDispatch} from 'react-redux';
-import {useFocusEffect} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   addFavouriteOffline,
   removeFavouriteOffline,
@@ -29,10 +27,6 @@ const RecipeDetail = () => {
   );
   const dispatch = useDispatch();
 
-  useFocusEffect(() => {
-    dispatch(selectScreen('Recipe detail'));
-  });
-
   const handleOffline = () => {
     if (!favourite.isOffline) {
       addFavouriteOffline(recipe);
@@ -50,7 +44,8 @@ const RecipeDetail = () => {
   };
 
   useEffect(() => {
-    if (favourites && favourites.length > 0) {
+    if (favourites && favourites.length > 0 && recipe) {
+      dispatch(selectScreen(recipe.strMeal));
       let isFavorite = false;
       for (let favourite in favourites) {
         if (favourites[favourite].idMeal === recipe.idMeal) {
@@ -74,8 +69,10 @@ const RecipeDetail = () => {
   }, [favourites, recipe]);
 
   useEffect(() => {
+    let isFavorite = false;
     for (let fav in favouritesOffline) {
       if (favouritesOffline[fav].idMeal === recipe.idMeal) {
+        isFavorite = true;
         setFavourite(prevState => ({
           ...prevState,
           isOffline: true,
@@ -84,7 +81,13 @@ const RecipeDetail = () => {
         return;
       }
     }
-  }, [favouritesOffline]);
+    if (!isFavorite) {
+      setFavourite(prevState => ({
+        ...prevState,
+        isOffline: false,
+      }));
+    }
+  }, [favouritesOffline, recipe]);
 
   const handleFavourite = () => {
     if (favourite.isFavourite) {
