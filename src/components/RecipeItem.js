@@ -7,7 +7,6 @@ import {useState} from 'react';
 const RecipeItem = ({item, onPress}) => {
   const [isPressed, setIsPressed] = useState(false);
 
-  // TODO Ver de sacar styles.item para que estén las imagenes todas
   return (
     <Pressable
       onPress={() => onPress()}

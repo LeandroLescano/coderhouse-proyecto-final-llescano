@@ -70,7 +70,6 @@ export const searchRecipes = searchText => {
     try {
       const response = await fetch(API_RECIPES_BY_SEARCH + searchText);
       const data = await response.json();
-      console.log(data);
       dispatch({
         type: SEARCH_RECIPES,
         payload: data.meals,
