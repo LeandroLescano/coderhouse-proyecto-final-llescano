@@ -4,9 +4,10 @@ import {theme} from '../utils/constants/theme';
 export const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
-    marginHorizontal: 10,
-    marginTop: 10,
     marginBottom: 5,
+  },
+  container: {
+    padding: 10,
   },
   input: {
     borderColor: theme.grey,

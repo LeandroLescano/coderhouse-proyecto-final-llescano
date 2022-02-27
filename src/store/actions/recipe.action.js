@@ -4,6 +4,7 @@ import {
   API_RECIPES_BY_ID,
   API_RECIPES_BY_INGREDIENT,
   API_RECIPES_BY_SEARCH,
+  API_RECIPE_RANDOM,
 } from '../../utils/constants/api';
 import {AREAS, CATEGORIES, INGREDIENTS} from '../../utils/constants/constans';
 
@@ -58,6 +59,27 @@ export const getRecipes = (type, filter) => {
       dispatch({
         type: GET_RECIPES,
         payload: recipes,
+      });
+    } catch (error) {
+      console.warn(error.message);
+    }
+  };
+};
+
+export const getRandomRecipe = () => {
+  return async dispatch => {
+    try {
+      const randomRecipe = await fetch(API_RECIPE_RANDOM, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => response.json())
+        .catch(error => console.log(error));
+      dispatch({
+        type: SELECT_RECIPE,
+        recipe: randomRecipe.meals[0],
       });
     } catch (error) {
       console.warn(error.message);

@@ -1,10 +1,10 @@
 import {AREAS, CATEGORIES, INGREDIENTS} from '../utils/constants/constans';
+import React, {useState} from 'react';
 
-import {API_RECIPE_RANDOM} from '../utils/constants/api';
 import HomeButton from '../components/HomeButton';
-import React from 'react';
+import LoadingRandom from '../components/LoadingRandom';
 import {View} from 'react-native';
-import {selectRecipe} from '../store/actions/recipe.action';
+import {getRandomRecipe} from '../store/actions/recipe.action';
 import {selectScreen} from '../store/actions/screen.action';
 import {styles} from '../styles/Home.styles';
 import {useDispatch} from 'react-redux';
@@ -12,26 +12,22 @@ import {useFocusEffect} from '@react-navigation/native';
 
 const Home = ({navigation}) => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   useFocusEffect(() => {
     dispatch(selectScreen('Home'));
   });
 
   const handleRandomRecipe = async () => {
-    const recipe = await fetch(API_RECIPE_RANDOM, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .catch(error => console.log(error));
-
-    dispatch(selectRecipe(recipe.meals[0]));
+    setIsLoading(true);
+    await dispatch(getRandomRecipe());
+    setIsLoading(false);
     navigation.navigate('RecipeDetail');
   };
+
   return (
     <View style={styles.container}>
+      {isLoading ? <LoadingRandom /> : null}
       <HomeButton
         handlePress={() => handleRandomRecipe()}
         styleButton={styles.button}

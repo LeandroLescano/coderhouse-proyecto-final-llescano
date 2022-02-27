@@ -8,4 +8,5 @@ export const theme = {
   darkGray: '#212121',
   grey: '#757575',
   disabledGrey: '#bdbdbd',
+  transparentDark: 'rgba(0, 0, 0, 0.6)',
 };

@@ -2,6 +2,7 @@ import {
   GET_RECIPES,
   SEARCH_RECIPES,
   SELECT_RECIPE,
+  UPDATE_LOADING,
 } from '../actions/recipe.action';
 
 const initialState = {
