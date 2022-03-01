@@ -1,8 +1,8 @@
 import {
+  CLEAR_RECIPES,
   GET_RECIPES,
   SEARCH_RECIPES,
   SELECT_RECIPE,
-  UPDATE_LOADING,
 } from '../actions/recipe.action';
 
 const initialState = {
@@ -27,6 +27,11 @@ const RecipeReducer = (state = initialState, action) => {
       return {
         ...state,
         searchRecipes: action.payload,
+      };
+    case CLEAR_RECIPES:
+      return {
+        ...state,
+        recipes: [],
       };
     default:
       return state;

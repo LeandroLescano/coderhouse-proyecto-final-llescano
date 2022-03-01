@@ -5,9 +5,10 @@ export const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     marginBottom: 5,
+    padding: 10,
   },
   container: {
-    padding: 10,
+    paddingBottom: 10,
   },
   input: {
     borderColor: theme.grey,

@@ -1,13 +1,14 @@
 import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-
-import {FlatList} from 'react-native-gesture-handler';
-import RecipeItem from '../components/RecipeItem';
 import {ToastAndroid, View} from 'react-native';
 import {
   getFavourites,
   getFavouritesOffline,
 } from '../store/actions/favourites.action';
+import {useDispatch, useSelector} from 'react-redux';
+
+import EmptyList from '../components/EmptyList';
+import {FlatList} from 'react-native-gesture-handler';
+import RecipeItem from '../components/RecipeItem';
 import {selectRecipe} from '../store/actions/recipe.action';
 import {selectScreen} from '../store/actions/screen.action';
 import {useFocusEffect} from '@react-navigation/native';
@@ -37,7 +38,6 @@ const Favourites = ({navigation}) => {
       dispatch(getFavourites());
     }
     if (isConnected === false) {
-      console.log('offline');
       ToastAndroid.show(
         'No internet connection. Only offline recipes in favorites section available',
         ToastAndroid.LONG,
@@ -58,6 +58,7 @@ const Favourites = ({navigation}) => {
           favourites && favourites.length > 0 ? favourites : favouritesOffline
         }
         keyExtractor={item => item.idMeal}
+        ListEmptyComponent={EmptyList}
         renderItem={({item}) => (
           <RecipeItem item={item} onPress={() => handlePress(item)} />
         )}

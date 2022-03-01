@@ -2,14 +2,15 @@ import {DrawerItem, createDrawerNavigator} from '@react-navigation/drawer';
 import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {changeLoginStatus, logOut, setUser} from '../store/actions/user.action';
+import {useDispatch, useSelector} from 'react-redux';
 
 import BottomTabNavigator from './BottomTabNavigator';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Login from '../screens/Login';
 import {NavigationContainer} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import {clearFavourites} from '../store/actions/favourites.action';
 import {theme} from '../utils/constants/theme';
-import {useDispatch, useSelector} from 'react-redux';
 
 const Drawer = createDrawerNavigator();
 
@@ -34,6 +35,12 @@ const AppNavigation = () => {
 
     return () => subscribe();
   }, []);
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+    dispatch(clearFavourites());
+  };
+
   return (
     <>
       <NavigationContainer>
@@ -66,7 +73,7 @@ const AppNavigation = () => {
                   icon={() => (
                     <Icon name="sign-out-alt" size={18} color={theme.white} />
                   )}
-                  onPress={() => dispatch(logOut())}
+                  onPress={() => handleLogOut()}
                   label="Sign Out"
                   labelStyle={{color: theme.white, fontSize: 14}}
                   style={{backgroundColor: theme.secondaryColor}}

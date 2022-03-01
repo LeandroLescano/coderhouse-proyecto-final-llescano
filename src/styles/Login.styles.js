@@ -24,6 +24,13 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
+  title: {
+    fontSize: 25,
+    color: theme.primaryColor,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    // textAlign: 'center',
+  },
   errorText: {
     color: '#851919',
   },

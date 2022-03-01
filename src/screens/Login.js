@@ -6,19 +6,19 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-
-import React from 'react';
 import {
   logIn,
   setError,
   setLoading,
-  signIn,
+  signUp,
 } from '../store/actions/user.action';
-import {styles} from '../styles/Login.styles';
 import {useDispatch, useSelector} from 'react-redux';
+
+import React from 'react';
+import {styles} from '../styles/Login.styles';
+import {theme} from '../utils/constants/theme';
 import {useRef} from 'react';
 import {useState} from 'react';
-import {theme} from '../utils/constants/theme';
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -28,6 +28,7 @@ const Login = () => {
   });
   const [isSignUp, setSignUp] = useState(false);
   const inputPassword = useRef();
+  const inputRepeatPassword = useRef();
   const inputEmail = useRef();
   const dispatch = useDispatch();
   const error = useSelector(state => state.user.error);
@@ -37,7 +38,12 @@ const Login = () => {
     if (user.email.length > 0 && user.password.length > 0) {
       dispatch(setLoading(true));
       if (isSignUp) {
-        dispatch(signIn(user.email.trim(), user.password.trim()));
+        if (user.password === user.repeatPassword) {
+          dispatch(signUp(user.email.trim(), user.password.trim()));
+        } else {
+          dispatch(setError('Passwords do not match'));
+          dispatch(setLoading(false));
+        }
       } else {
         dispatch(logIn(user.email.trim(), user.password.trim()));
       }
@@ -45,6 +51,11 @@ const Login = () => {
       dispatch(setError('Please fill all fields'));
       inputPassword.current.focus();
     }
+  };
+
+  const handleSwitch = () => {
+    setSignUp(!isSignUp);
+    dispatch(setError(''));
   };
 
   const handleChange = (attr, value) => {
@@ -62,6 +73,7 @@ const Login = () => {
         <Image style={styles.logo} source={logo} />
       </View>
       <View style={styles.inputContainer}>
+        <Text style={styles.title}>{isSignUp ? 'Sign up' : 'Log in'}</Text>
         <TextInput
           placeholder="Email"
           value={user.email}
@@ -77,19 +89,23 @@ const Login = () => {
           onChangeText={txt => handleChange('password', txt)}
           style={styles.input}
           ref={inputPassword}
-          onSubmitEditing={() => handleLogin()}
+          onSubmitEditing={() =>
+            isSignUp ? inputRepeatPassword.current.focus() : handleLogin()
+          }
           secureTextEntry={true}
         />
         {isSignUp ? (
           <TextInput
             placeholder="Repeat password"
             value={user.repeatPassword}
+            ref={inputRepeatPassword}
             onChangeText={txt => handleChange('repeatPassword', txt)}
+            onSubmitEditing={() => handleLogin()}
             style={styles.input}
             secureTextEntry={true}
           />
         ) : null}
-        <Text style={styles.signUp} onPress={() => setSignUp(!isSignUp)}>
+        <Text style={styles.signUp} onPress={() => handleSwitch()}>
           {isSignUp ? (
             <>
               Have an account already?{' '}
@@ -105,7 +121,7 @@ const Login = () => {
         <TouchableHighlight onPress={() => handleLogin()} style={styles.button}>
           <Text style={styles.buttonText}>
             {loading ? (
-              <ActivityIndicator color={theme.white} />
+              <ActivityIndicator color={theme.white} size="large" />
             ) : isSignUp ? (
               'Create account'
             ) : (

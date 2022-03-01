@@ -1,17 +1,17 @@
 import {Image, ScrollView, Text, TouchableHighlight, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {addFavourite, removeFavourite} from '../functions/firebaseFavourites';
-
-import IngredientList from '../components/IngredientList';
-import {selectScreen} from '../store/actions/screen.action';
-import {styles} from '../styles/RecipeDetail.styles';
-import {useDispatch, useSelector} from 'react-redux';
 import {
   addFavouriteOffline,
   removeFavouriteOffline,
 } from '../functions/offlineFavourites';
-import {useNetInfo} from '@react-native-community/netinfo';
+import {useDispatch, useSelector} from 'react-redux';
+
+import IngredientList from '../components/IngredientList';
 import {getFavouritesOffline} from '../store/actions/favourites.action';
+import {selectScreen} from '../store/actions/screen.action';
+import {styles} from '../styles/RecipeDetail.styles';
+import {useNetInfo} from '@react-native-community/netinfo';
 
 const RecipeDetail = () => {
   const [favourite, setFavourite] = useState({
@@ -44,8 +44,10 @@ const RecipeDetail = () => {
   };
 
   useEffect(() => {
-    if (favourites && favourites.length > 0 && recipe) {
+    if (recipe) {
       dispatch(selectScreen(recipe.strMeal));
+    }
+    if (favourites && favourites.length > 0 && recipe) {
       let isFavorite = false;
       for (let favourite in favourites) {
         if (favourites[favourite].idMeal === recipe.idMeal) {
@@ -91,6 +93,10 @@ const RecipeDetail = () => {
 
   const handleFavourite = () => {
     if (favourite.isFavourite) {
+      setFavourite(prevState => ({
+        ...prevState,
+        isFavourite: false,
+      }));
       removeFavourite(favourite.id);
       removeFromOfflineStorage();
     } else {

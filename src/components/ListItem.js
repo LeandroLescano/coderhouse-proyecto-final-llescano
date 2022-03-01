@@ -8,7 +8,7 @@ import {theme} from '../utils/constants/theme';
 const ListItem = ({title, onPress}) => {
   return (
     <TouchableHighlight
-      underlayColor={theme.primaryDark}
+      underlayColor={theme.secondaryDark}
       onPress={() => onPress()}
       style={styles.item}>
       <>

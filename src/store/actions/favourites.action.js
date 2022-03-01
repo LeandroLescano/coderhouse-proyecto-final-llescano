@@ -7,16 +7,19 @@ export const GET_FAVOURITES_OFFLINE = 'GET_FAVOURITES_OFFLINE';
 
 export const getFavourites = () => {
   return async dispatch => {
-    const uid = await auth().currentUser.uid;
-    const favouriteRef = database().ref(`users/${uid}/favourites`);
-    favouriteRef.on('value', snapshot => {
-      const recipeArray = [];
-      const recipes = snapshot.val();
-      for (const key in recipes) {
-        recipeArray.push({...recipes[key], idFirebase: key});
-      }
-      dispatch({type: GET_FAVOURITES, payload: recipeArray});
-    });
+    const user = await auth().currentUser;
+    if (user) {
+      const uid = user.uid;
+      const favouriteRef = database().ref(`users/${uid}/favourites`);
+      favouriteRef.on('value', snapshot => {
+        const recipeArray = [];
+        const recipes = snapshot.val();
+        for (const key in recipes) {
+          recipeArray.push({...recipes[key], idFirebase: key});
+        }
+        dispatch({type: GET_FAVOURITES, payload: recipeArray});
+      });
+    }
   };
 };
 
@@ -26,3 +29,8 @@ export const getFavouritesOffline = () => {
     dispatch({type: GET_FAVOURITES_OFFLINE, payload: favourites});
   };
 };
+
+export const clearFavourites = () => ({
+  type: GET_FAVOURITES,
+  payload: [],
+});

@@ -11,6 +11,7 @@ import {AREAS, CATEGORIES, INGREDIENTS} from '../../utils/constants/constans';
 export const SELECT_RECIPE = 'SELECT_RECIPE';
 export const GET_RECIPES = 'GET_RECIPES';
 export const SEARCH_RECIPES = 'SEARCH_RECIPES';
+export const CLEAR_RECIPES = 'CLEAR_RECIPES';
 
 export const selectRecipe = (recipe, id) => {
   if (recipe) {
@@ -28,6 +29,12 @@ export const selectRecipe = (recipe, id) => {
       });
     };
   }
+};
+
+export const clearRecipes = () => {
+  return {
+    type: CLEAR_RECIPES,
+  };
 };
 
 export const getRecipes = (type, filter) => {

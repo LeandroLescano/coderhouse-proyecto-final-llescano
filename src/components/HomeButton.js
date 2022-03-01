@@ -1,6 +1,6 @@
 import {Pressable, Text} from 'react-native';
-import React from 'react';
 
+import React from 'react';
 import {styles} from '../styles/Home.styles';
 import {theme} from '../utils/constants/theme';
 import {useNetInfo} from '@react-native-community/netinfo';
@@ -22,7 +22,7 @@ const HomeButton = ({handlePress, styleButton, title}) => {
             isConnected === false
               ? theme.disabledGrey
               : pressed
-              ? theme.primaryDark
+              ? theme.secondaryDark
               : theme.secondaryColor,
         },
       ]}>

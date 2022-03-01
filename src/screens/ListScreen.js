@@ -3,8 +3,8 @@ import {FlatList, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import EmptyList from '../components/EmptyList';
 import ListItem from '../components/ListItem';
+import LoadingList from '../components/LoadingList';
 import {getAreas} from '../store/actions/area.action';
 import {getCategories} from '../store/actions/category.action';
 import {getIngredients} from '../store/actions/ingredient.action ';
@@ -62,7 +62,7 @@ const ListScreen = ({route, handleType, navigation}) => {
             onPress={() => handlePress(item)}
           />
         )}
-        ListEmptyComponent={EmptyList}
+        ListEmptyComponent={LoadingList}
         data={data}
         keyExtractor={(item, index) => index.toString()}
       />

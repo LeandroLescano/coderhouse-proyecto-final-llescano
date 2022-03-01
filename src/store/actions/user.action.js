@@ -20,7 +20,7 @@ export const setError = error => ({
   payload: error,
 });
 
-export const signIn = (email, password) => async dispatch => {
+export const signUp = (email, password) => async dispatch => {
   try {
     auth()
       .createUserWithEmailAndPassword(email, password)
