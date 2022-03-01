@@ -33,6 +33,14 @@ const Search = ({navigation}) => {
     navigation.navigate('RecipeDetail');
   };
 
+  const NoResults = () => (
+    <View style={{marginHorizontal: 10}}>
+      <Text style={{textAlign: 'center'}}>
+        There is no results for your search
+      </Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -57,11 +65,7 @@ const Search = ({navigation}) => {
           renderItem={({item}) => (
             <RecipeItem item={item} onPress={() => handlePress(item)} />
           )}
-          ListEmptyComponent={
-            firstSeach.current ? (
-              <Text>There is no results for your search</Text>
-            ) : null
-          }
+          ListEmptyComponent={firstSeach.current ? <NoResults /> : null}
           keyExtractor={item => item.idMeal}
         />
       )}
