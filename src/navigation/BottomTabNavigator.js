@@ -5,10 +5,13 @@ import React from 'react';
 import {Text} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {theme} from '../utils/constants/theme';
+import {useSelector} from 'react-redux';
 
 const BottomTab = createMaterialTopTabNavigator();
 
 const BottomTabNavigator = () => {
+  const screen = useSelector(state => state.screen.current);
+
   return (
     <BottomTab.Navigator
       tabBarPosition="bottom"
@@ -16,6 +19,7 @@ const BottomTabNavigator = () => {
         swipeEnabled: false,
         tabBarStyle: {
           backgroundColor: theme.primaryColor,
+          height: screen.includes('Step') ? 0 : 'auto',
         },
         tabBarLabelStyle: {
           color: theme.white,

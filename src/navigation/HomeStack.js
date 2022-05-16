@@ -4,6 +4,8 @@ import ListScreen from '../screens/ListScreen';
 import React from 'react';
 import RecipeDetail from '../screens/RecipeDetail';
 import Search from '../screens/Search';
+import Swiper from '../screens/Swiper';
+import WizardNavigator from './WizardNavigator';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useState} from 'react';
 
@@ -48,6 +50,13 @@ const HomeStack = () => {
         )}
       </Stack.Screen>
       <Stack.Screen component={Search} name="Search" />
+      <Stack.Screen
+        component={WizardNavigator}
+        name="Swiper"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };

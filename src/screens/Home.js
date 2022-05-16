@@ -61,6 +61,13 @@ const Home = ({navigation}) => {
           title="List areas"
         />
       </View>
+      <View>
+        <HomeButton
+          handlePress={() => navigation.navigate('Swiper')}
+          styleButton={styles.buttonRow}
+          title="Swiper"
+        />
+      </View>
     </View>
   );
 };
