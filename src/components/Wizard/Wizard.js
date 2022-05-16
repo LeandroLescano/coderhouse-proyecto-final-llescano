@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 
-const Wizard = ({currentStep, onNext, isLastStep}) => {
+const Wizard = ({onNext, isLastStep}) => {
   const screen = useSelector(state => state.screen.current);
   return (
     <View style={{borderTopColor: 'lightblue', borderTopWidth: 2, height: 60}}>
